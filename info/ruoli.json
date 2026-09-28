@@ -1,9 +1,23 @@
 [
     {
         "id": 0,
-        "nome": "veggente",
+        "nome": "Veggente",
         "descrizione": "Ogni notte puoi scoprire il ruolo di un giocatore a tua scelta",
         "ordineRisveglio" : 1,
-        "fazione": "villaggio"
+        "fazione": "VILLAGGIO"
+    },
+    {
+        "id": 1,
+        "nome": "Demone",
+        "descrizione": "uccidi un giocatore a tua scelta ogni notte",
+        "ordineRisveglio" : 2,
+        "fazione": "DEMONI"
+    },
+    {
+        "id": 2,
+        "nome": "Bodyguard",
+        "descrizione": "scegli un giocatore da proteggere ogni notte, se il demone lo sceglie non morirà",
+        "ordineRisveglio" : 3,
+        "fazione": "VILLAGGIO"
     }
 ]
