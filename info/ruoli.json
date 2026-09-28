@@ -1,0 +1,9 @@
+[
+    {
+        "id": 0,
+        "nome": "veggente",
+        "descrizione": "Ogni notte puoi scoprire il ruolo di un giocatore a tua scelta",
+        "ordineRisveglio" : 1,
+        "fazione": "villaggio"
+    }
+]
