@@ -12,6 +12,7 @@ const inputNome = document.getElementById("inputNome");
 const inputCodice = document.getElementById("inputCodice");
 const bottoneCrea = document.getElementById("btnCrea");
 const bottoneUnisciti = document.getElementById("btnUnisciti");
+const bottoneInizia = document.getElementById("btnInizia");
 
 bottoneCrea.addEventListener("click", () => {
   const nome = inputNome.value.trim();
@@ -28,12 +29,18 @@ bottoneUnisciti.addEventListener("click", () => {
     socket.emit("unisci", { nome, codice });
 });
 
+bottoneInizia.addEventListener("click", () => {
+    socket.emit("iniziaPartita");
+});
+
 socket.on("stanzaCreata", ({ codice }) => {
     console.log("Stanza creata con codice:", codice);
 
     schermataIniziale.style.display = "none";
     lobby.style.display = "block";
     codiceStanzaEl.textContent = codice;
+
+    bottoneInizia.disabled = false;
 });
 
 socket.on("aggiornaLobby", ({ codice, giocatori }) => {
