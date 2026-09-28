@@ -10,11 +10,10 @@ const porta = 3000;
 
 const stanze = {};
 function generaCodiceStanza() {
-    const lettere = "ABCDEFGHJKLMNPQRSTUVWXYZ";
-    let codice = "";
-    do{
-        codice = Array.from({lenght:4 } , () => lettere[Math.floor(Math.random() * lettere.lenght)]).join("");
-    }while(stanze[codice])
+    let codice;
+    do {
+        codice = String(Math.floor(Math.random() * 1000000)).padStart(6, "0");
+    } while (stanze[codice]);
     return codice;
 }
 
@@ -30,13 +29,16 @@ io.on("connection", (socket) => {
     console.log("Un giocatore si è connesso", socket.id);
 
     socket.on("creaStanza", ({ nome }) => {
+        console.log("creazione di una stanza " + nome);
         const codice = generaCodiceStanza();
+        console.log("Stanza creata con codice:", codice);
         stanze[codice] = {
             giocatori: {
                 [socket.id]: {nome, host: true}
             },
             fase: fases[0],
         }
+        console.log("Stanze attuali:", stanze);
 
         socket.join(codice);
         socket.data.stanza = codice; // servira per disconneterci
@@ -85,7 +87,7 @@ function trasmettiLobby(codice){
         nome: g.nome,
         host: g.host,
     }));
-    io.to(codice).emit("aggiornaLobby", {giocatori: elenco});
+    io.to(codice).emit("aggiornaLobby", { codice, giocatori: elenco });
 }
 
 server.listen(porta, () => {
