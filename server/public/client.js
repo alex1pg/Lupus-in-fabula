@@ -13,6 +13,7 @@ const inputCodice = document.getElementById("inputCodice");
 const bottoneCrea = document.getElementById("btnCrea");
 const bottoneUnisciti = document.getElementById("btnUnisciti");
 const bottoneInizia = document.getElementById("btnInizia");
+const listaRuoli = document.getElementById("listaRuoli");
 
 bottoneCrea.addEventListener("click", () => {
   const nome = inputNome.value.trim();
@@ -33,12 +34,25 @@ bottoneInizia.addEventListener("click", () => {
     socket.emit("iniziaPartita");
 });
 
-socket.on("stanzaCreata", ({ codice }) => {
+socket.on("stanzaCreata", ({ codice, ruoli }) => {
     console.log("Stanza creata con codice:", codice);
 
     schermataIniziale.style.display = "none";
     lobby.style.display = "block";
     codiceStanzaEl.textContent = codice;
+
+    listaRuoli.innerHTML = "";
+    ruoli.forEach(r => {
+        const li = document.createElement("li");
+        const nomeRuolo = document.createElement("p");
+        nomeRuolo.textContent = r.nome;
+        const descrizioneRuolo = document.createElement("p");
+        descrizioneRuolo.textContent = r.descrizione;
+        li.appendChild(nomeRuolo);
+        li.appendChild(descrizioneRuolo);
+        li.id = r.id;
+        listaRuoli.appendChild(li);
+    });
 
     bottoneInizia.disabled = false;
 });

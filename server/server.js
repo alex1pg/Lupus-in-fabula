@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const ruoli = require("../info/ruoli.json");
 
 const app = express();
 const server = http.createServer(app);
@@ -38,11 +39,11 @@ io.on("connection", (socket) => {
             },
             fase: fases[0],
         }
-        console.log("Stanze attuali:", stanze);
 
         socket.join(codice);
+        socket.join(ruoli);
         socket.data.stanza = codice; // servira per disconneterci
-        socket.emit("stanzaCreata", {codice});
+        socket.emit("stanzaCreata", {codice, ruoli});
         trasmettiLobby(codice);
     });
 
@@ -66,6 +67,14 @@ io.on("connection", (socket) => {
 
         trasmettiLobby(codice);
     });
+
+    socket.on("iniziaPartita", () => {
+        const codice = socket.data.stanza;
+        if(!codice || !stanze[codice]) return;
+        const stanza = stanze[codice];
+
+        console.log("Ruoli disponibili:", ruoli);
+    })
 
     socket.on("disconnect", () => {
         const codice = socket.data.stanza;
