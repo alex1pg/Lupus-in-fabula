@@ -42,17 +42,51 @@ socket.on("stanzaCreata", ({ codice, ruoli }) => {
     codiceStanzaEl.textContent = codice;
 
     listaRuoli.innerHTML = "";
-    ruoli.forEach(r => {
-        const li = document.createElement("li");
-        const nomeRuolo = document.createElement("p");
-        nomeRuolo.textContent = r.nome;
-        const descrizioneRuolo = document.createElement("p");
-        descrizioneRuolo.textContent = r.descrizione;
-        li.appendChild(nomeRuolo);
-        li.appendChild(descrizioneRuolo);
-        li.id = r.id;
-        listaRuoli.appendChild(li);
-    });
+    console.log(ruoli);
+    for(const allineamento in ruoli){
+        const div = document.createElement("div");
+
+        const Allineamento = document.createElement("h2");
+        Allineamento.innerHTML = allineamento;
+
+
+        const ul = document.createElement("ul");
+        for(const ruolo of ruoli[allineamento]){
+            const li = document.createElement("li");
+
+            const nomeRuolo = document.createElement("h4");
+            nomeRuolo.innerHTML = ruolo.nome;
+
+            const descrizione = document.createElement("p");
+            descrizione.innerHTML = ruolo.descrizione;
+
+            li.appendChild(nomeRuolo);
+            li.appendChild(descrizione);
+
+            ul.appendChild(li);
+        }
+
+        div.appendChild(Allineamento);
+        div.appendChild(ul);
+        
+        listaRuoli.appendChild(div);
+    }
+    // ruoli.forEach(r => {
+        // const div = document.createElement("div");
+
+        // const Allineamento = document.createElement("h2");
+        // Allineamento.
+        // const li = document.createElement("li");
+        // const nomeRuolo = document.createElement("p");
+        // nomeRuolo.textContent = r.nome;
+        // const descrizioneRuolo = document.createElement("p");
+        // descrizioneRuolo.textContent = r.descrizione;
+
+        // li.appendChild(nomeRuolo);
+        // li.appendChild(descrizioneRuolo);
+        // li.id = r.id;
+        // listaRuoli.appendChild(li);
+    // });
 
     bottoneInizia.disabled = false;
 });

@@ -1,23 +1,136 @@
-[
-    {
-        "id": 0,
-        "nome": "Veggente",
-        "descrizione": "Ogni notte puoi scoprire il ruolo di un giocatore a tua scelta",
-        "ordineRisveglio" : 1,
-        "fazione": "VILLAGGIO"
-    },
-    {
-        "id": 1,
-        "nome": "Demone",
-        "descrizione": "uccidi un giocatore a tua scelta ogni notte",
-        "ordineRisveglio" : 2,
-        "fazione": "DEMONI"
-    },
-    {
-        "id": 2,
-        "nome": "Bodyguard",
-        "descrizione": "scegli un giocatore da proteggere ogni notte, se il demone lo sceglie non morirà",
-        "ordineRisveglio" : 3,
-        "fazione": "VILLAGGIO"
-    }
-]
+{
+    "VILLAGGIO": [
+        {
+            "id": 1,
+            "nome": "Veggente",
+            "descrizione": "Ogni notte scegli un altro giocatore e scopri l'allineamento.",
+            "allineamento": "VILLAGGIO",
+            "sveglia": 10
+        },
+        {
+            "id": 2,
+            "nome": "Prete",
+            "descrizione": "Ogni notte scegli un altro giocatore da proteggere. Se il giocatore viene attaccato, non muore.",
+            "allineamento": "VILLAGGIO",
+            "sveglia": 20
+        },
+        {
+            "id": 8,
+            "nome": "Prostitua",
+            "descrizione":"Ogni notte puoi scegliere un altro giocatore da visitare, se è un minion o demone non potrà usare la sua abilità, se il demone lo uccide, muori anche tu, se il demone cerca di ucciderti mentre visiti un altro giocatore, non muori.",
+            "allineamento":"VILLAGGIO",
+            "sveglia": 1
+        },
+        {
+            "id": 9,
+            "nome":"Vecchino",
+            "descrizione":"la notte dopo un linciaggio scopri il ruole del giocatore linciato",
+            "allineamento":"VILLAGGIO",
+            "sveglia": 10
+        },
+        {
+            "id":10,
+            "nome":"Araldo",
+            "descrizione":"Ogni notte vieni a sapere se un seguace ha nominato qualcuno",
+            "allineamento":"VILLAGGIO",
+            "sveglia":10
+        },
+        {
+            "id":14,
+            "nome":"Giocoliere",
+            "descrizione":"Durante il giorno puoi scegliere 3 giocatori e cercare di indovinare il loro ruolo, se durante la notte non vieni ucciso dal demone, ti verranno detti quanti (non quali) ruoli hai azzeccato",
+            "allineamento":"VILLAGGIO",
+            "sveglia":31
+        },
+        {
+            "id":15,
+            "nome": "Massone",
+            "descrizione":"La prima notte i 2 massoni conoscono l'altro",
+            "allineamento":"VILLAGGIO",
+            "sveglia":null
+        },
+        {
+            "id":17,
+            "nome":"Indovino",
+            "descrizione":"Ogni notte scegli 2 giocatori qualsiasi e scopri se almeno 1 è un demone, c'è un giocatore buono (pista falsa) che tu vedi come demone.",
+            "allineamento":"VILLAGGIO",
+            "sveglia":10
+        }
+    ],
+    "FORESTIERI" : [
+        {
+            "id":7,
+            "nome":"Idiota",
+            "descrizione":"Non hai abilità se il Villaggio ti lincia, vinci la partita.",
+            "allineamento":"FORESTIERI",
+            "sveglia": null
+        },
+        {
+            "id":13,
+            "nome":"Il lunatico",
+            "descrizione":"Pensa di essere il demone, ogni notte il vero demone viene a sapere le azioni che hai compiuto",
+            "allineamento":"FORESTIERI",
+            "sveglia":29
+        },
+        {
+            "id":16,
+            "nome":"Ubriacone",
+            "descrizione":"Non sai di essere l'ubriacone, ti viene mostrato un altro ruolo del villaggio, quando userai la tua abilità non succederà nulla, e riceverai informazioni false dal narratore.",
+            "allineamento":"VILLAGGIO",
+            "sveglia":null
+        },
+        {
+            "id":17,
+            "nome":"Cacciatore",
+            "descrizione":"La prima notte ricevi un giocatore che deve morire linciato, vinci se quel giocatore muore linciato.",
+            "allineamento":"FORESTIERI",
+            "sveglia":null
+        }
+    ],
+    "DEMONI":[
+        {
+            "id":3,
+            "nome": "Imp",
+            "descrizione": "Ogni notte scegli un giocatore da uccidere, se ti suicidi il ruolo passa ad un seguace.",
+            "allineamento": "DEMONI",
+            "sveglia": 30
+        },
+        {
+            "id":5,
+            "nome":"Spirito d'avorio",
+            "descrizione":"Ogni notte scegli 2 giocatori, uno da uccidere e uno da trasformare in un seguace a caso",
+            "allineamento":"DEMONI",
+            "sveglia": 30
+        }
+    ],
+    "SEGUACE":[
+        {
+            "id":4,
+            "nome":"Avvelenatore",
+            "descrizione":"Ogni notte scegli un giocatore da avvelenare, per quella notte l'abilità di quel giocatore non funzionerà o darà informazioni errate, loro non sapranno di essere avvelanti.",
+            "allineamento":"DEMONI",
+            "sveglia": 5
+        },
+        {
+            "id":6,
+            "nome":"Gemello cattivo",
+            "descrizione":"Tu ed un altro giocatore non cattivi scoprite il corrispettivo ruolo dell'altro, se il gemello buono viene linciato il Villaggio perde, il Villaggio non può vincere finchè tutti e due siete in vita, il Veggente ti vedrà come buono",
+            "allineamento":"VILLAGGIO",
+            "sveglia": 5
+        },
+        {
+            "id":11,
+            "nome":"Strega",
+            "descrizione":"Ogni notte scegli un altro giocatore se quel giocatore nomina qualcuno, il giocatore scelto morirà al istante, la nominazione continua come di norma",
+            "allineamento":"DEMONI",
+            "sveglia":5
+        },
+        {
+            "id":12,
+            "nome":"La marionetta",
+            "descrizione":"Sei sotto l'influenza del demone, non sai che sei la marionetta, il tuo voto non conta, finchè sei in vita chiunque il demone voti riceverà segretamente il tuo voto.",
+            "allineamento": "VILLAGGIO",
+            "sveglia":20
+        }
+    ]
+}
