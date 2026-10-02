@@ -68,12 +68,18 @@ io.on("connection", (socket) => {
         trasmettiLobby(codice);
     });
 
-    socket.on("iniziaPartita", () => {
-        const codice = socket.data.stanza;
-        if(!codice || !stanze[codice]) return;
-        const stanza = stanze[codice];
+    socket.on("iniziaPartita", (ruoliScelti) => {
+        const ruoliAssegnati = mescolaRuoli(ruoliScelti);
+        
+        const stanza = socket.data.stanza;
+        const giocatori = Object.values(stanza.giocatori)
+        for(const i = 1; i < giocatori.length; i++){
+            giocatori[i].ruolo = ruoliAssegnati[i - 1];
+        }
 
-        console.log("Ruoli disponibili:", ruoli);
+        socket.join(giocatori);
+
+        io.to(socket.data.stanza).emit("assegnazioneRuoli", {giocatori});        
     })
 
     socket.on("disconnect", () => {
@@ -97,6 +103,14 @@ function trasmettiLobby(codice){
         host: g.host,
     }));
     io.to(codice).emit("aggiornaLobby", { codice, giocatori: elenco });
+}
+
+function mescolaRuoli(ruoli) {
+    for(let i = ruoli.length -1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1))
+        [ruoli[i], ruoli[j] = ruoli[j], ruoli[i]];
+    }
+    return array;
 }
 
 server.listen(porta, () => {

@@ -4,6 +4,8 @@ socket.on("connect", () => {
     console.log("Connesso al server con id:", socket.id);
 });
 
+let SetRuoli = {};
+
 const schermataIniziale = document.getElementById("schermataIniziale");
 const lobby = document.getElementById("lobby");
 const listaGiocatori = document.getElementById("listaGiocatori");
@@ -31,6 +33,14 @@ bottoneUnisciti.addEventListener("click", () => {
 });
 
 bottoneInizia.addEventListener("click", () => {
+    const ruoliScelti = Object.entries(SetRuoli)
+        .flatMap(([categoria, ruoliLista]) => 
+            ruoliLista
+            .filter(r => r.presente === true)
+            .map(r => ({...r, categoria}))
+        );
+    
+    socket.join(ruoliScelti);
     socket.emit("iniziaPartita");
 });
 
@@ -42,8 +52,10 @@ socket.on("stanzaCreata", ({ codice, ruoli }) => {
     codiceStanzaEl.textContent = codice;
 
     listaRuoli.innerHTML = "";
-    console.log(ruoli);
-    for(const allineamento in ruoli){
+
+    SetRuoli = ruoli;
+    
+    for(const allineamento in SetRuoli){
         const div = document.createElement("div");
 
         const Allineamento = document.createElement("h2");
@@ -51,42 +63,39 @@ socket.on("stanzaCreata", ({ codice, ruoli }) => {
 
 
         const ul = document.createElement("ul");
-        for(const ruolo of ruoli[allineamento]){
+        for(const ruolo of SetRuoli[allineamento]){
             const li = document.createElement("li");
 
             const nomeRuolo = document.createElement("h4");
             nomeRuolo.innerHTML = ruolo.nome;
 
+            const presente = document.createElement("input");
+            presente.type = "checkbox";
+            presente.checked = ruolo.presente;
+            presente.addEventListener("change", () => {
+                ruolo.presente = presente.checked;
+            });
+
             const descrizione = document.createElement("p");
             descrizione.innerHTML = ruolo.descrizione;
 
+            const div2 = document.createElement("div");
+            div2.style.display = "flex";
+            div2.style.height = "fit-content";
+
             li.appendChild(nomeRuolo);
+            li.appendChild(presente);
             li.appendChild(descrizione);
+            li.appendChild(div2);
 
             ul.appendChild(li);
         }
 
         div.appendChild(Allineamento);
         div.appendChild(ul);
-        
+
         listaRuoli.appendChild(div);
     }
-    // ruoli.forEach(r => {
-        // const div = document.createElement("div");
-
-        // const Allineamento = document.createElement("h2");
-        // Allineamento.
-        // const li = document.createElement("li");
-        // const nomeRuolo = document.createElement("p");
-        // nomeRuolo.textContent = r.nome;
-        // const descrizioneRuolo = document.createElement("p");
-        // descrizioneRuolo.textContent = r.descrizione;
-
-        // li.appendChild(nomeRuolo);
-        // li.appendChild(descrizioneRuolo);
-        // li.id = r.id;
-        // listaRuoli.appendChild(li);
-    // });
 
     bottoneInizia.disabled = false;
 });
@@ -103,6 +112,19 @@ socket.on("aggiornaLobby", ({ codice, giocatori }) => {
         listaGiocatori.appendChild(li);
     });
 });
+
+socket.on("assegnazioneRuoli", ({ giocatori }) => {
+    schermataIniziale.style.display = "none";
+    lobby.style.display = "block";
+    codiceStanzaEl.textContent  = codice;
+
+    listaGiocatori.innerHTML = "";
+    giocatori.forEach( g => {
+        const li = document.createElement("li");
+        li.textContent = g.nome + (g.host ? " (host)" : "");
+        listaGiocatori.appendChild(li);
+    });
+})
 
 socket.on("errore", (messaggio) => {
   alert(messaggio);
