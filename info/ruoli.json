@@ -131,6 +131,13 @@
             "descrizione":"Sei sotto l'influenza del demone, non sai che sei la marionetta, il tuo voto non conta, finchè sei in vita chiunque il demone voti riceverà segretamente il tuo voto.",
             "allineamento": "VILLAGGIO",
             "sveglia":20
+        },
+        {
+            "id":18,
+            "nome":"Bombarolo",
+            "descrizione":"La notte ti svegli e puoi scegliere un giocatore, e un numero tra 1 e 5, la notte successiva quel giocatore viene a sapere che ha la bomba, deve scegliere un numero tra 1 e 5 se lo indovina esplode, altrimenti è obbligato a passare la bomba ad un altro giocatore, il numero detto dal giocatore diventa a sua volta uno dei numeri che fa innescare la bomba",
+            "allineamento":"DEMONI",
+            "sveglia":20
         }
     ]
 }
