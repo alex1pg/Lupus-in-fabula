@@ -21,7 +21,7 @@ function generaCodiceStanza() {
 const fases = {
     0: "Lobby",
     1: "Notte",
-    2: "Girono",
+    2: "Giorno",
 }
 
 app.use(express.static("public"));
@@ -69,17 +69,20 @@ io.on("connection", (socket) => {
     });
 
     socket.on("iniziaPartita", (ruoliScelti) => {
+        console.log("assegnazione ruoli")
         const ruoliAssegnati = mescolaRuoli(ruoliScelti);
         
-        const stanza = socket.data.stanza;
+        const stanza = stanze[socket.data.stanza];
         const giocatori = Object.values(stanza.giocatori)
         for(const i = 1; i < giocatori.length; i++){
             giocatori[i].ruolo = ruoliAssegnati[i - 1];
         }
 
-        socket.join(giocatori);
+        console.log("Ruoli assegnati:", ruoliAssegnati);
 
-        io.to(socket.data.stanza).emit("assegnazioneRuoli", {giocatori});        
+        // socket.join(giocatori);
+
+        // io.to(socket.data.stanza).emit("assegnazioneRuoli", {giocatori});        
     })
 
     socket.on("disconnect", () => {
@@ -106,11 +109,11 @@ function trasmettiLobby(codice){
 }
 
 function mescolaRuoli(ruoli) {
-    for(let i = ruoli.length -1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1))
-        [ruoli[i], ruoli[j] = ruoli[j], ruoli[i]];
+    for (let i = ruoli.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [ruoli[i], ruoli[j]] = [ruoli[j], ruoli[i]];
     }
-    return array;
+    return ruoli;
 }
 
 server.listen(porta, () => {

@@ -33,6 +33,7 @@ bottoneUnisciti.addEventListener("click", () => {
 });
 
 bottoneInizia.addEventListener("click", () => {
+    console.log("Inizio partita");
     const ruoliScelti = Object.entries(SetRuoli)
         .flatMap(([categoria, ruoliLista]) => 
             ruoliLista
@@ -40,8 +41,7 @@ bottoneInizia.addEventListener("click", () => {
             .map(r => ({...r, categoria}))
         );
     
-    socket.join(ruoliScelti);
-    socket.emit("iniziaPartita");
+    socket.emit("iniziaPartita", ruoliScelti);
 });
 
 socket.on("stanzaCreata", ({ codice, ruoli }) => {
