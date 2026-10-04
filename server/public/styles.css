@@ -1,5 +1,7 @@
 @import "tailwindcss";
 /* per il build di tailwindcss */
-/* npx @tailwindcss -i .public/styles.css -o .public/output.css --watch*/
+/* npx @tailwindcss/cli -i ./public/styles.css -o ./public/output.css --watch*/
 /* questo genera il file finale public/output.css e lo aggiorna in automatico*/
 /* ti serviranno 2 terminale, uno per runnare questo comando qua sopra e uno per runnare il server*/
+/*https://tailwindcss.com/docs/installation/using-vite*/
+/* link ai docs di tailwind per tutte le infomrazioni*/
